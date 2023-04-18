@@ -7,7 +7,7 @@ def read(file):
     contacts_list = list(rows)
     return  contacts_list
 
-def format_number(contacts_list):
+def number_update(contacts_list):
     pattern = r'(\+7|8)(\s*)(\(*)(\d{3})(\)*)(\s*)' \
                             r'(\-*)(\d{3})(\s*)(\-*)(\d{2})(\s*)(\-*)' \
                             r'(\d{2})(\s*)(\(*)(доб)*(\.*)(\s*)(\d+)*(\)*)'
@@ -20,7 +20,7 @@ def format_number(contacts_list):
         contacts_list_new.append(list_new)
     return contacts_list_new
 
-def format_full_name(contacts_list):
+def name_change(contacts_list):
     pattern = r'^([А-ЯЁа-яё]+)(\s*)(\,?)([А-ЯЁа-яё]+)' \
                        r'(\s*)(\,?)([А-ЯЁа-яё]*)(\,?)(\,?)(\,?)'
     pattern_bloc = r'\1\3\10\4\6\9\7\8'
@@ -32,7 +32,7 @@ def format_full_name(contacts_list):
         contacts_list_new.append(list_new)
     return contacts_list_new
 
-def join_duplicates(contacts_list):
+def list_change(contacts_list):
     for i in contacts_list:
         for j in contacts_list:
             if i[0] == j[0] and i[1] == j[1] and i != j:
@@ -60,8 +60,8 @@ def write_file(contacts_list):
 
 if __name__ == '__main__':
     file = read("data/phonebook_raw.csv")
-    file = format_number(file)
-    file = format_full_name(file)
-    file = join_duplicates(file)
+    file = number_update(file)
+    file = name_change(file)
+    file = list_change(file)
     write_file(file)
     print(file)
