@@ -1,5 +1,6 @@
 import csv
 import re
+from pprint import pprint
 
 def read(file):
    with open(file, encoding='utf-8') as f:
@@ -52,6 +53,7 @@ def list_change(contacts_list):
             contacts_list_new.append(value)
     return contacts_list_new
 
+
 def write_file(contacts_list):
     with open("data/phonebook.csv", "w", encoding='utf-8') as f:
         data_writer = csv.writer(f, delimiter=',')
@@ -63,5 +65,23 @@ if __name__ == '__main__':
     file = number_update(file)
     file = name_change(file)
     file = list_change(file)
-    write_file(file)
-    print(file)
+    # write_file(file)
+    # print(file[1])
+
+
+l = []
+a = [i for i in file[1:]]
+for i in a:
+    t = dict(zip(file[0][0:], i ))
+    l.append(t)
+for v in l:
+    print(v)
+    for k in l[1:]:
+        print(k)
+        break
+        # for i in dict1:
+        #     if (i in dict2) and (dict1[i] == dict2[i]):
+        #         shared_dict[i] = dict1[i]
+        # print(v['lastname'], k['lastname'])
+    # break
+
