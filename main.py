@@ -23,7 +23,7 @@ def number_update(contacts_list):
 
 def name_change(contacts_list):
     pattern = r'^([А-ЯЁа-яё]+)(\s*)(\,?)([А-ЯЁа-яё]+)' \
-                       r'(\s*)(\,?)([А-ЯЁа-яё]*)(\,?)(\,?)(\,?)'
+                    r'(\s*)(\,?)([А-ЯЁа-яё]*)(\,?)(\,?)(\,?)'
     pattern_bloc = r'\1\3\10\4\6\9\7\8'
     contacts_list_new = list()
     for value in contacts_list:
@@ -33,55 +33,52 @@ def name_change(contacts_list):
         contacts_list_new.append(list_new)
     return contacts_list_new
 
-def list_change(contacts_list):
-    for i in contacts_list:
-        for j in contacts_list:
-            if i[0] == j[0] and i[1] == j[1] and i != j:
-                if i[2] == (' '):
-                    i[2] = j[2]
-                if i[3] == (' '):
-                    i[3] = j[3]
-                if i[4] == (' '):
-                    i[4] = j[4]
-                if i[5] == (' '):
-                    i[5] = j[5]
-                if i[6] == (' '):
-                    i[6] = j[6]
-    contacts_list_new = list()
-    for value in contacts_list:
-        if value not in contacts_list_new:
-            contacts_list_new.append(value)
+# def list_change(contacts_list):
+#     for i in contacts_list:
+#         for j in contacts_list:
+#             if i[0] == j[0] and i[1] == j[1] and  len(i) == len(j):
+#                 if i[2] == ' ': i[2] = j[2]
+#                 if i[3] == ' ': i[3] = j[3]
+#                 if i[4] == ' ': i[4] = j[4]
+#                 if i[5] == ' ': i[5] = j[5]
+#                 if i[6] == ' ': i[6] = j[6]
+#     contacts_list_new = []
+#     for value in contacts_list:
+#         if value not in contacts_list_new:
+#             contacts_list_new.append(value)
+#     return contacts_list_new
+
+
+def change(contacts_list):
+    contacts_list_new =[]
+    contact_list_dict = {}
+    for column in contacts_list:
+        last_name = column[0]
+        if last_name not in contact_list_dict:
+            contact_list_dict[last_name] = column
+        else:
+            for ind, item in enumerate(contact_list_dict[last_name]):
+                if item == '':
+                    contact_list_dict[last_name][ind] = column[ind]
+    
+    for last_name, contact in contact_list_dict.items():
+        for _ in contact:
+            if contact not in contacts_list_new:
+                contacts_list_new.append(contact)
     return contacts_list_new
 
 
-def write_file(contacts_list):
-    with open("data/phonebook.csv", "w", encoding='utf-8') as f:
+
+
+def write_file(contacts_list_new):
+    with open("data/phonebook.csv", "w", encoding='utf-8', newline='') as f:
         data_writer = csv.writer(f, delimiter=',')
-        data_writer.writerows(contacts_list)
+        data_writer.writerows(contacts_list_new)
 
 
 if __name__ == '__main__':
     file = read("data/phonebook_raw.csv")
     file = number_update(file)
     file = name_change(file)
-    file = list_change(file)
-    # write_file(file)
-    # print(file[1])
-
-
-l = []
-a = [i for i in file[1:]]
-for i in a:
-    t = dict(zip(file[0][0:], i ))
-    l.append(t)
-for v in l:
-    print(v)
-    for k in l[1:]:
-        print(k)
-        break
-        # for i in dict1:
-        #     if (i in dict2) and (dict1[i] == dict2[i]):
-        #         shared_dict[i] = dict1[i]
-        # print(v['lastname'], k['lastname'])
-    # break
-
+    file = change(file)
+    write_file(file)
