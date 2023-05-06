@@ -33,21 +33,6 @@ def name_change(contacts_list):
         contacts_list_new.append(list_new)
     return contacts_list_new
 
-# def list_change(contacts_list):
-#     for i in contacts_list:
-#         for j in contacts_list:
-#             if i[0] == j[0] and i[1] == j[1] and  len(i) == len(j):
-#                 if i[2] == ' ': i[2] = j[2]
-#                 if i[3] == ' ': i[3] = j[3]
-#                 if i[4] == ' ': i[4] = j[4]
-#                 if i[5] == ' ': i[5] = j[5]
-#                 if i[6] == ' ': i[6] = j[6]
-#     contacts_list_new = []
-#     for value in contacts_list:
-#         if value not in contacts_list_new:
-#             contacts_list_new.append(value)
-#     return contacts_list_new
-
 
 def change(contacts_list):
     contacts_list_new =[]
